@@ -72,6 +72,7 @@ public class BookController {
 			}
 
 			booksCreated++;
+			bookService.createBook(book);
 		}
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(booksCreated);

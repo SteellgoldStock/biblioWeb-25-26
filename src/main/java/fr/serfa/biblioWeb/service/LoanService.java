@@ -1,7 +1,7 @@
 package fr.serfa.biblioWeb.service;
 
+import fr.serfa.biblioWeb.enums.LoanStatus;
 import fr.serfa.biblioWeb.model.Loan;
-import fr.serfa.biblioWeb.model.Loan.LoanStatus;
 import fr.serfa.biblioWeb.repositories.LoanRepository;
 import fr.serfa.biblioWeb.repositories.BookRepository;
 import fr.serfa.biblioWeb.repositories.MemberRepository;
@@ -69,17 +69,14 @@ public class LoanService {
 	}
 
 	public Loan createLoan(UUID memberId, UUID bookId) {
-		// Vérifier que le membre existe
 		if (memberRepository.findById(memberId).isEmpty()) {
 			throw new IllegalArgumentException("Member not found");
 		}
 
-		// Vérifier que le livre existe
 		if (bookRepository.findById(bookId).isEmpty()) {
 			throw new IllegalArgumentException("Book not found");
 		}
 
-		// Vérifier que le livre est disponible
 		if (!isBookAvailable(bookId)) {
 			throw new IllegalStateException("Book is not available");
 		}

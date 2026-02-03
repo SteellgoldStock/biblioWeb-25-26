@@ -1,7 +1,7 @@
 package fr.serfa.biblioWeb.repositories;
 
+import fr.serfa.biblioWeb.enums.LoanStatus;
 import fr.serfa.biblioWeb.model.Loan;
-import fr.serfa.biblioWeb.model.Loan.LoanStatus;
 import org.springframework.stereotype.Repository;
 
 import java.util.*;
