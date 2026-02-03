@@ -60,7 +60,6 @@ public class BookController {
 
 	@PostMapping
 	public ResponseEntity<Integer> createBooks(@RequestBody List<Book> books) {
-		List<Book> result = new ArrayList<>();
 		Integer booksCreated = 0;
 
 		for (Book book : books) {
@@ -68,12 +67,11 @@ public class BookController {
 				if (books.size() == 1) {
 					return ResponseEntity.status(HttpStatus.CONFLICT).body(booksCreated);
 				}
+
 				continue;
 			}
 
-			Book createdBook = bookService.createBook(book);
 			booksCreated++;
-			result.add(createdBook);
 		}
 
 		return ResponseEntity.status(HttpStatus.CREATED).body(booksCreated);

@@ -42,8 +42,7 @@ public class AuthorService {
 	}
 
 	public Integer getAuthorBookCount(UUID authorId) {
-		List<Book> books = bookRepository.findByAuthorId(authorId.toString());
-		return books.size();
+		return bookRepository.findByAuthorId(authorId.toString()).size();
 	}
 
 	public Integer getAuthorBookCount(Author author) {

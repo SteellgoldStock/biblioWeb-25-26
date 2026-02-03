@@ -50,7 +50,7 @@ public class Author {
 	// public String getDescription() {
 	// 	StringBuilder desc = new StringBuilder("L'auteur ");
 	// 	desc.append(this.name).append(" est né(e) le ").append(formatedDate(this.birthDate));
-//
+
 	// 	if (this.deathDate != null) {
 	// 		desc.append(" et est mort le ").append(formatedDate(this.deathDate))
 	// 				.append(" à l'âge de ").append(this.getAge()).append(" ans.");
@@ -61,7 +61,7 @@ public class Author {
 	// 	return desc.toString();
 	// }
 
-	public String formatedDate(LocalDate date) {
-		return date.getDayOfMonth()+"/"+date.getMonthValue()+"/"+date.getYear();
-	}
+	// public String formatedDate(LocalDate date) {
+	// 	return date.getDayOfMonth()+"/"+date.getMonthValue()+"/"+date.getYear();
+	// }
 }
