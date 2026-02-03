@@ -12,7 +12,8 @@ public class LoanRepository {
 
 	private final List<Loan> loans = new ArrayList<>();
 
-	public LoanRepository() {}
+	public LoanRepository() {
+	}
 
 	public List<Loan> findAll() {
 		return new ArrayList<>(loans);

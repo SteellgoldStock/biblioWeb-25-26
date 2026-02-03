@@ -11,7 +11,8 @@ public class AuthorRepository {
 
 	private final List<Author> authors = new ArrayList<>();
 
-	public AuthorRepository() {}
+	public AuthorRepository() {
+	}
 
 	public List<Author> findAll() {
 		return new ArrayList<>(authors);
@@ -31,11 +32,11 @@ public class AuthorRepository {
 
 	public boolean existsByNameAndDates(String name, java.time.LocalDate birthDate, java.time.LocalDate deathDate) {
 		return authors.stream()
-				.anyMatch(author -> 
-					author.getName().equalsIgnoreCase(name) && 
-					author.birthDate.equals(birthDate) &&
-					((author.deathDate == null && deathDate == null) || 
-					 (author.deathDate != null && author.deathDate.equals(deathDate)))
+				.anyMatch(author ->
+						author.getName().equalsIgnoreCase(name) &&
+								author.birthDate.equals(birthDate) &&
+								((author.deathDate == null && deathDate == null) ||
+										(author.deathDate != null && author.deathDate.equals(deathDate)))
 				);
 	}
 

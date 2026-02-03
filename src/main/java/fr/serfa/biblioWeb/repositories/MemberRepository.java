@@ -11,7 +11,8 @@ public class MemberRepository {
 
 	private final List<Member> members = new ArrayList<>();
 
-	public MemberRepository() {}
+	public MemberRepository() {
+	}
 
 	public List<Member> findAll() {
 		return new ArrayList<>(members);

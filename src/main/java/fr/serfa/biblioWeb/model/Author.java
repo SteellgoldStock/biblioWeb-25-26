@@ -12,7 +12,7 @@ public class Author {
 	public LocalDate birthDate;
 	public LocalDate deathDate;
 
-	public Author (String name, LocalDate birthDate, LocalDate deathDate) {
+	public Author(String name, LocalDate birthDate, LocalDate deathDate) {
 		this.id = UUID.randomUUID();
 		this.name = name;
 		this.birthDate = birthDate;
@@ -27,7 +27,7 @@ public class Author {
 		return name;
 	}
 
-	public boolean isDead () {
+	public boolean isDead() {
 		return deathDate != null;
 	}
 

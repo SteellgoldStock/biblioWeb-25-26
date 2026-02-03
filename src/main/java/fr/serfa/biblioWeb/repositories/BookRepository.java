@@ -12,7 +12,8 @@ public class BookRepository {
 
 	private final List<Book> books = new ArrayList<>();
 
-	public BookRepository() {}
+	public BookRepository() {
+	}
 
 	public List<Book> findAll() {
 		return new ArrayList<>(books);

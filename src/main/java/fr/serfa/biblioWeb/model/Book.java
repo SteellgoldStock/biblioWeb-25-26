@@ -10,7 +10,7 @@ public class Book {
 	public Long isbn;
 	public Author author;
 
-	public Book (String name, Long isbn, Author author) {
+	public Book(String name, Long isbn, Author author) {
 		this.id = UUID.randomUUID();
 		this.name = name;
 		this.isbn = isbn;

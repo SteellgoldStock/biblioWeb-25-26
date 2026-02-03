@@ -65,7 +65,7 @@ public class LoanController {
 		try {
 			UUID memberId = UUID.fromString(loanRequest.get("memberId"));
 			UUID bookId = UUID.fromString(loanRequest.get("bookId"));
-			
+
 			Loan createdLoan = loanService.createLoan(memberId, bookId);
 			return ResponseEntity.status(HttpStatus.CREATED).body(createdLoan);
 		} catch (IllegalArgumentException e) {

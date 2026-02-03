@@ -87,13 +87,13 @@ public class LoanService {
 
 	public Loan returnLoan(UUID loanId) {
 		Optional<Loan> optionalLoan = loanRepository.findById(loanId);
-		
+
 		if (optionalLoan.isEmpty()) {
 			throw new IllegalArgumentException("Loan not found");
 		}
 
 		Loan loan = optionalLoan.get();
-		
+
 		if (loan.getStatus() == LoanStatus.RETURNED) {
 			throw new IllegalStateException("Book already returned");
 		}
