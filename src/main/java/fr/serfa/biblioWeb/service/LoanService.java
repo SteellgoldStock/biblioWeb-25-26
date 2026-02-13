@@ -1,17 +1,21 @@
 package fr.serfa.biblioWeb.service;
 
 import fr.serfa.biblioWeb.enums.LoanStatus;
+import fr.serfa.biblioWeb.model.Book;
 import fr.serfa.biblioWeb.model.Loan;
+import fr.serfa.biblioWeb.model.Member;
 import fr.serfa.biblioWeb.repositories.LoanRepository;
 import fr.serfa.biblioWeb.repositories.BookRepository;
 import fr.serfa.biblioWeb.repositories.MemberRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class LoanService {
 
 	private final LoanRepository loanRepository;
@@ -69,37 +73,30 @@ public class LoanService {
 	}
 
 	public Loan createLoan(UUID memberId, UUID bookId) {
-		if (memberRepository.findById(memberId).isEmpty()) {
-			throw new IllegalArgumentException("Member not found");
-		}
+		Member member = memberRepository.findById(memberId)
+				.orElseThrow(() -> new IllegalArgumentException("Member not found"));
 
-		if (bookRepository.findById(bookId).isEmpty()) {
-			throw new IllegalArgumentException("Book not found");
-		}
+		Book book = bookRepository.findById(bookId)
+				.orElseThrow(() -> new IllegalArgumentException("Book not found"));
 
 		if (!isBookAvailable(bookId)) {
 			throw new IllegalStateException("Book is not available");
 		}
 
-		Loan loan = new Loan(memberId, bookId);
-		return loanRepository.addNew(loan);
+		Loan loan = new Loan(member, book);
+		return loanRepository.save(loan);
 	}
 
 	public Loan returnLoan(UUID loanId) {
-		Optional<Loan> optionalLoan = loanRepository.findById(loanId);
-
-		if (optionalLoan.isEmpty()) {
-			throw new IllegalArgumentException("Loan not found");
-		}
-
-		Loan loan = optionalLoan.get();
+		Loan loan = loanRepository.findById(loanId)
+				.orElseThrow(() -> new IllegalArgumentException("Loan not found"));
 
 		if (loan.getStatus() == LoanStatus.RETURNED) {
 			throw new IllegalStateException("Book already returned");
 		}
 
 		loan.returnBook();
-		return loan;
+		return loanRepository.save(loan);
 	}
 
 	public void deleteLoan(UUID id) {

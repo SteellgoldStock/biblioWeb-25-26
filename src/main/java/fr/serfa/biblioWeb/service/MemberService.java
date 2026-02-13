@@ -3,12 +3,14 @@ package fr.serfa.biblioWeb.service;
 import fr.serfa.biblioWeb.model.Member;
 import fr.serfa.biblioWeb.repositories.MemberRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class MemberService {
 
 	private final MemberRepository memberRepository;
@@ -26,15 +28,15 @@ public class MemberService {
 	}
 
 	public Optional<Member> getMemberByEmail(String email) {
-		return memberRepository.findByEmail(email);
+		return memberRepository.findByEmailIgnoreCase(email);
 	}
 
 	public List<Member> searchMembersByLastName(String lastName) {
-		return memberRepository.findByLastName(lastName);
+		return memberRepository.findByLastNameContainingIgnoreCase(lastName);
 	}
 
 	public Member createMember(Member member) {
-		return memberRepository.addNew(member);
+		return memberRepository.save(member);
 	}
 
 	public void deleteMemberById(UUID id) {
@@ -42,6 +44,6 @@ public class MemberService {
 	}
 
 	public boolean existsByEmail(String email) {
-		return memberRepository.existsByEmail(email);
+		return memberRepository.existsByEmailIgnoreCase(email);
 	}
 }

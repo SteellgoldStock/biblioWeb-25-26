@@ -1,17 +1,38 @@
 package fr.serfa.biblioWeb.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.UUID;
 
+@Entity
+@Table(name = "books")
 public class Book {
 
-	private final UUID id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
 
+	@Column(nullable = false)
+	@NotBlank
 	public String name;
+
+	@Column(unique = true, nullable = false)
+	@NotNull
 	public Long isbn;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "author_id", nullable = false)
+	@NotNull
+	@JsonManagedReference
 	public Author author;
 
+	public Book() {
+	}
+
 	public Book(String name, Long isbn, Author author) {
-		this.id = UUID.randomUUID();
 		this.name = name;
 		this.isbn = isbn;
 		this.author = author;

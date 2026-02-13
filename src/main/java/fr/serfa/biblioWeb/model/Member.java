@@ -1,23 +1,40 @@
 package fr.serfa.biblioWeb.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+
 import java.time.LocalDate;
-import java.util.Map;
 import java.util.UUID;
 
+@Entity
+@Table(name = "members")
 public class Member {
 
-	private final UUID id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
 
+	@Column(name = "first_name", nullable = false)
+	@NotBlank
 	public String firstName;
+
+	@Column(name = "last_name", nullable = false)
+	@NotBlank
 	public String lastName;
+
+	@Column(unique = true, nullable = false)
+	@Email
+	@NotBlank
 	public String email;
 
-	public final LocalDate registrationDate;
+	@Column(name = "registration_date", nullable = false, updatable = false)
+	public LocalDate registrationDate;
 
-	public Map<UUID, Loan> loans;
+	public Member() {
+	}
 
 	public Member(String firstName, String lastName, String email) {
-		this.id = UUID.randomUUID();
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.email = email;

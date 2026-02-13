@@ -2,77 +2,23 @@ package fr.serfa.biblioWeb.repositories;
 
 import fr.serfa.biblioWeb.model.Author;
 import fr.serfa.biblioWeb.model.Book;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Repository
-public class BookRepository {
+public interface BookRepository extends JpaRepository<Book, UUID> {
 
-	private final List<Book> books = new ArrayList<>();
+	Optional<Book> findByIsbn(Long isbn);
 
-	public BookRepository() {
-	}
+	List<Book> findByNameContainingIgnoreCase(String name);
 
-	public List<Book> findAll() {
-		return new ArrayList<>(books);
-	}
+	boolean existsByIsbn(Long isbn);
 
-	public Optional<Book> findById(UUID id) {
-		return books.stream()
-				.filter(book -> book.getId().equals(id))
-				.findFirst();
-	}
+	List<Book> findByAuthor(Author author);
 
-	public List<Book> findByTitle(String title) {
-		return books.stream()
-				.filter(book -> book.getName().toLowerCase().contains(title.toLowerCase()))
-				.collect(Collectors.toList());
-	}
-
-	public Optional<Book> findByISBN(Long isbn) {
-		return books.stream()
-				.filter(book -> book.getISBN().equals(isbn))
-				.findFirst();
-	}
-
-	public boolean existsByIsbn(Long isbn) {
-		return books.stream()
-				.anyMatch(book -> book.getISBN().equals(isbn));
-	}
-
-	public List<Book> findByAuthor(Author author) {
-		return books.stream()
-				.filter(book -> book.getAuthor().equals(author))
-				.collect(Collectors.toList());
-	}
-
-	public List<Book> findByAuthorId(String id) {
-		return books.stream()
-				.filter(book -> book.getAuthor().getId().equals(UUID.fromString(id)))
-				.collect(Collectors.toList());
-	}
-
-	// TODO: Faire caca
-
-	public Book addNew(Book book) {
-		books.add(book);
-		return book;
-	}
-
-	public void deleteById(UUID id) {
-		books.removeIf(book -> book.getId().equals(id));
-	}
-
-	public void deleteByISBN(Long isbn) {
-		books.removeIf(book -> Objects.equals(book.getISBN(), isbn));
-	}
-
-	public List<Author> findAllAuthors() {
-		return books.stream()
-				.map(Book::getAuthor)
-				.distinct()
-				.collect(Collectors.toList());
-	}
+	List<Book> findByAuthorId(UUID authorId);
 }

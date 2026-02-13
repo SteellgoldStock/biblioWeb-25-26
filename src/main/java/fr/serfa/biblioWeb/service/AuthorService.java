@@ -5,12 +5,14 @@ import fr.serfa.biblioWeb.model.Book;
 import fr.serfa.biblioWeb.repositories.AuthorRepository;
 import fr.serfa.biblioWeb.repositories.BookRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 @Service
+@Transactional
 public class AuthorService {
 
 	private final AuthorRepository authorRepository;
@@ -30,11 +32,11 @@ public class AuthorService {
 	}
 
 	public List<Author> findAuthorsByName(String name) {
-		return authorRepository.findByName(name);
+		return authorRepository.findByNameContainingIgnoreCase(name);
 	}
 
 	public Author createAuthor(Author author) {
-		return authorRepository.addNew(author);
+		return authorRepository.save(author);
 	}
 
 	public void deleteAuthor(UUID id) {
@@ -42,7 +44,7 @@ public class AuthorService {
 	}
 
 	public Integer getAuthorBookCount(UUID authorId) {
-		return bookRepository.findByAuthorId(authorId.toString()).size();
+		return bookRepository.findByAuthorId(authorId).size();
 	}
 
 	public Integer getAuthorBookCount(Author author) {
@@ -50,6 +52,6 @@ public class AuthorService {
 	}
 
 	public List<Book> getBooksByAuthor(UUID authorId) {
-		return bookRepository.findByAuthorId(authorId.toString());
+		return bookRepository.findByAuthorId(authorId);
 	}
 }

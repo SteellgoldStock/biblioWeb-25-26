@@ -1,28 +1,52 @@
 package fr.serfa.biblioWeb.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import fr.serfa.biblioWeb.enums.LoanStatus;
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.time.LocalDate;
 import java.util.UUID;
 
+@Entity
+@Table(name = "loans")
 public class Loan {
 
-	private final UUID id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private UUID id;
 
-	public UUID memberId;
-	public UUID bookId;
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "member_id", nullable = false)
+	@NotNull
+	@JsonManagedReference
+	public Member member;
 
+	@ManyToOne(fetch = FetchType.EAGER)
+	@JoinColumn(name = "book_id", nullable = false)
+	@NotNull
+	@JsonManagedReference
+	public Book book;
+
+	@Column(name = "loan_date", nullable = false)
 	public LocalDate loanDate;
 
+	@Column(name = "expected_return_date", nullable = false)
 	public LocalDate expectedReturnDate;
+
+	@Column(name = "actual_return_date")
 	public LocalDate actualReturnDate;
 
+	@Enumerated(EnumType.STRING)
+	@Column(nullable = false)
 	public LoanStatus status;
 
-	public Loan(UUID memberId, UUID bookId) {
-		this.id = UUID.randomUUID();
-		this.memberId = memberId;
-		this.bookId = bookId;
+	public Loan() {
+	}
+
+	public Loan(Member member, Book book) {
+		this.member = member;
+		this.book = book;
 		this.loanDate = LocalDate.now();
 		this.expectedReturnDate = LocalDate.now().plusWeeks(2); // 2 semaines par défaut
 		this.actualReturnDate = null;
@@ -33,12 +57,20 @@ public class Loan {
 		return id;
 	}
 
+	public Member getMember() {
+		return member;
+	}
+
+	public Book getBook() {
+		return book;
+	}
+
 	public UUID getMemberId() {
-		return memberId;
+		return member != null ? member.getId() : null;
 	}
 
 	public UUID getBookId() {
-		return bookId;
+		return book != null ? book.getId() : null;
 	}
 
 	public LoanStatus getStatus() {
