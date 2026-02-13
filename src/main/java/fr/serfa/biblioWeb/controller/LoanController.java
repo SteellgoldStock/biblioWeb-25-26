@@ -25,6 +25,11 @@ public class LoanController {
 		return ResponseEntity.ok(loanService.getAllLoans());
 	}
 
+	@GetMapping("/overdues")
+	public ResponseEntity<List<Loan>> getOverdueLoans() {
+		return ResponseEntity.ok(loanService.getOverdueLoans());
+	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Loan> getLoanById(@PathVariable UUID id) {
 		return loanService.getLoanById(id)

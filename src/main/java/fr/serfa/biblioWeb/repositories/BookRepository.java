@@ -54,6 +54,8 @@ public class BookRepository {
 				.collect(Collectors.toList());
 	}
 
+	// TODO: Faire caca
+
 	public Book addNew(Book book) {
 		books.add(book);
 		return book;
