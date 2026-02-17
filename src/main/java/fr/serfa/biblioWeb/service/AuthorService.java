@@ -27,7 +27,7 @@ public class AuthorService {
 		return authorRepository.findAll();
 	}
 
-	public Optional<Author> getAuthorById(UUID id) {
+	public Optional<Author> getAuthorById(String id) {
 		return authorRepository.findById(id);
 	}
 
@@ -39,11 +39,11 @@ public class AuthorService {
 		return authorRepository.save(author);
 	}
 
-	public void deleteAuthor(UUID id) {
+	public void deleteAuthor(String id) {
 		authorRepository.deleteById(id);
 	}
 
-	public Integer getAuthorBookCount(UUID authorId) {
+	public Integer getAuthorBookCount(String authorId) {
 		return bookRepository.findByAuthorId(authorId).size();
 	}
 
@@ -51,7 +51,7 @@ public class AuthorService {
 		return getAuthorBookCount(author.getId());
 	}
 
-	public List<Book> getBooksByAuthor(UUID authorId) {
+	public List<Book> getBooksByAuthor(String authorId) {
 		return bookRepository.findByAuthorId(authorId);
 	}
 }

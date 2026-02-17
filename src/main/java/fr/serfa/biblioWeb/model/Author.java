@@ -3,6 +3,7 @@ package fr.serfa.biblioWeb.model;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.time.LocalDate;
 import java.util.UUID;
@@ -12,8 +13,8 @@ import java.util.UUID;
 public class Author {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
-	private UUID id;
+	@UuidGenerator
+	private String id;
 
 	@Column(nullable = false)
 	@NotBlank
@@ -35,7 +36,7 @@ public class Author {
 		this.deathDate = deathDate;
 	}
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 

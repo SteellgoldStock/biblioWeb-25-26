@@ -23,7 +23,7 @@ public class MemberService {
 		return memberRepository.findAll();
 	}
 
-	public Optional<Member> getMemberById(UUID id) {
+	public Optional<Member> getMemberById(String id) {
 		return memberRepository.findById(id);
 	}
 
@@ -39,7 +39,7 @@ public class MemberService {
 		return memberRepository.save(member);
 	}
 
-	public void deleteMemberById(UUID id) {
+	public void deleteMemberById(String id) {
 		memberRepository.deleteById(id);
 	}
 

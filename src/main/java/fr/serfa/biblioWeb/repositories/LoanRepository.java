@@ -14,21 +14,21 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Repository
-public interface LoanRepository extends JpaRepository<Loan, UUID> {
+public interface LoanRepository extends JpaRepository<Loan, String> {
 
 	List<Loan> findByMember(Member member);
 
-	List<Loan> findByMemberId(UUID memberId);
+	List<Loan> findByMemberId(String memberId);
 
 	@Query("SELECT l FROM Loan l WHERE l.member.id = :memberId AND (l.status = 'ACTIVE' OR l.status = 'OVERDUE')")
-	List<Loan> findActiveLoansByMemberId(@Param("memberId") UUID memberId);
+	List<Loan> findActiveLoansByMemberId(@Param("memberId") String memberId);
 
 	List<Loan> findByBook(Book book);
 
-	List<Loan> findByBookId(UUID bookId);
+	List<Loan> findByBookId(String bookId);
 
 	@Query("SELECT l FROM Loan l WHERE l.book.id = :bookId AND (l.status = 'ACTIVE' OR l.status = 'OVERDUE')")
-	Optional<Loan> findActiveLoanByBookId(@Param("bookId") UUID bookId);
+	Optional<Loan> findActiveLoanByBookId(@Param("bookId") String bookId);
 
 	List<Loan> findByStatus(LoanStatus status);
 
@@ -36,5 +36,5 @@ public interface LoanRepository extends JpaRepository<Loan, UUID> {
 	List<Loan> findOverdueLoans();
 
 	@Query("SELECT CASE WHEN COUNT(l) = 0 THEN true ELSE false END FROM Loan l WHERE l.book.id = :bookId AND (l.status = 'ACTIVE' OR l.status = 'OVERDUE')")
-	boolean isBookAvailable(@Param("bookId") UUID bookId);
+	boolean isBookAvailable(@Param("bookId") String bookId);
 }

@@ -14,7 +14,7 @@ public class Loan {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	private UUID id;
+	private String id;
 
 	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "member_id", nullable = false)
@@ -53,7 +53,7 @@ public class Loan {
 		this.status = LoanStatus.ACTIVE;
 	}
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -65,11 +65,11 @@ public class Loan {
 		return book;
 	}
 
-	public UUID getMemberId() {
+	public String getMemberId() {
 		return member != null ? member.getId() : null;
 	}
 
-	public UUID getBookId() {
+	public String getBookId() {
 		return book != null ? book.getId() : null;
 	}
 

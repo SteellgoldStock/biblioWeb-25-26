@@ -28,7 +28,7 @@ public class BookService {
 		return bookRepository.findAll();
 	}
 
-	public Optional<Book> getBookById(UUID id) {
+	public Optional<Book> getBookById(String id) {
 		return bookRepository.findById(id);
 	}
 
@@ -45,7 +45,7 @@ public class BookService {
 	}
 
 	public List<Book> getBooksByAuthorId(String authorId) {
-		return bookRepository.findByAuthorId(UUID.fromString(authorId));
+		return bookRepository.findByAuthorId(authorId);
 	}
 
 	public List<Author> getAllAuthorsFromBooks() {
@@ -58,7 +58,6 @@ public class BookService {
 	public Book createBook(Book book) {
 		Author author = book.getAuthor();
 		if (author != null && author.getId() == null) {
-			// Vérifier si l'auteur existe déjà
 			Optional<Author> existingAuthor = authorRepository.findByNameIgnoreCaseAndBirthDateAndDeathDate(
 					author.getName(),
 					author.getBirthDate(),
@@ -83,7 +82,7 @@ public class BookService {
 				.toList();
 	}
 
-	public void deleteBookById(UUID id) {
+	public void deleteBookById(String id) {
 		bookRepository.deleteById(id);
 	}
 

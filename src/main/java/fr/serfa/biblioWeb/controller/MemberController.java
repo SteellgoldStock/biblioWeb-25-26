@@ -29,7 +29,7 @@ public class MemberController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Member> getMemberById(@PathVariable UUID id) {
+	public ResponseEntity<Member> getMemberById(@PathVariable String id) {
 		return memberService.getMemberById(id)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
@@ -48,12 +48,12 @@ public class MemberController {
 	}
 
 	@GetMapping("/{id}/loans")
-	public ResponseEntity<List<Loan>> getMemberLoans(@PathVariable UUID id) {
+	public ResponseEntity<List<Loan>> getMemberLoans(@PathVariable String id) {
 		return ResponseEntity.ok(loanService.getLoansByMemberId(id));
 	}
 
 	@GetMapping("/{id}/loans/active")
-	public ResponseEntity<List<Loan>> getMemberActiveLoans(@PathVariable UUID id) {
+	public ResponseEntity<List<Loan>> getMemberActiveLoans(@PathVariable String id) {
 		return ResponseEntity.ok(loanService.getActiveLoansByMemberId(id));
 	}
 
@@ -68,7 +68,7 @@ public class MemberController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteMember(@PathVariable UUID id) {
+	public ResponseEntity<Void> deleteMember(@PathVariable String id) {
 		memberService.deleteMemberById(id);
 		return ResponseEntity.noContent().build();
 	}

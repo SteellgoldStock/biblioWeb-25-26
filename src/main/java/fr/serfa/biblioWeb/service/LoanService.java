@@ -34,31 +34,31 @@ public class LoanService {
 		return loans;
 	}
 
-	public Optional<Loan> getLoanById(UUID id) {
+	public Optional<Loan> getLoanById(String id) {
 		Optional<Loan> loan = loanRepository.findById(id);
 		loan.ifPresent(Loan::updateStatus);
 		return loan;
 	}
 
-	public List<Loan> getLoansByMemberId(UUID memberId) {
+	public List<Loan> getLoansByMemberId(String memberId) {
 		List<Loan> loans = loanRepository.findByMemberId(memberId);
 		loans.forEach(Loan::updateStatus);
 		return loans;
 	}
 
-	public List<Loan> getActiveLoansByMemberId(UUID memberId) {
+	public List<Loan> getActiveLoansByMemberId(String memberId) {
 		List<Loan> loans = loanRepository.findActiveLoansByMemberId(memberId);
 		loans.forEach(Loan::updateStatus);
 		return loans;
 	}
 
-	public List<Loan> getLoansByBookId(UUID bookId) {
+	public List<Loan> getLoansByBookId(String bookId) {
 		List<Loan> loans = loanRepository.findByBookId(bookId);
 		loans.forEach(Loan::updateStatus);
 		return loans;
 	}
 
-	public Optional<Loan> getActiveLoanByBookId(UUID bookId) {
+	public Optional<Loan> getActiveLoanByBookId(String bookId) {
 		Optional<Loan> loan = loanRepository.findActiveLoanByBookId(bookId);
 		loan.ifPresent(Loan::updateStatus);
 		return loan;
@@ -68,11 +68,11 @@ public class LoanService {
 		return loanRepository.findOverdueLoans();
 	}
 
-	public boolean isBookAvailable(UUID bookId) {
+	public boolean isBookAvailable(String bookId) {
 		return loanRepository.isBookAvailable(bookId);
 	}
 
-	public Loan createLoan(UUID memberId, UUID bookId) {
+	public Loan createLoan(String memberId, String bookId) {
 		Member member = memberRepository.findById(memberId)
 				.orElseThrow(() -> new IllegalArgumentException("Member not found"));
 
@@ -87,7 +87,7 @@ public class LoanService {
 		return loanRepository.save(loan);
 	}
 
-	public Loan returnLoan(UUID loanId) {
+	public Loan returnLoan(String loanId) {
 		Loan loan = loanRepository.findById(loanId)
 				.orElseThrow(() -> new IllegalArgumentException("Loan not found"));
 
@@ -99,7 +99,7 @@ public class LoanService {
 		return loanRepository.save(loan);
 	}
 
-	public void deleteLoan(UUID id) {
+	public void deleteLoan(String id) {
 		loanRepository.deleteById(id);
 	}
 }

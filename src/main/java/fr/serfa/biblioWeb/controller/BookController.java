@@ -30,7 +30,7 @@ public class BookController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Book> getBookById(@PathVariable UUID id) {
+	public ResponseEntity<Book> getBookById(@PathVariable String id) {
 		return bookService.getBookById(id)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
@@ -79,18 +79,18 @@ public class BookController {
 	}
 
 	@GetMapping("/{id}/availability")
-	public ResponseEntity<Map<String, Boolean>> checkBookAvailability(@PathVariable UUID id) {
+	public ResponseEntity<Map<String, Boolean>> checkBookAvailability(@PathVariable String id) {
 		boolean isAvailable = loanService.isBookAvailable(id);
 		return ResponseEntity.ok(Map.of("available", isAvailable));
 	}
 
 	@GetMapping("/{id}/loans")
-	public ResponseEntity<List<Loan>> getBookLoanHistory(@PathVariable UUID id) {
+	public ResponseEntity<List<Loan>> getBookLoanHistory(@PathVariable String id) {
 		return ResponseEntity.ok(loanService.getLoansByBookId(id));
 	}
 
 	@GetMapping("/{id}/current-borrower")
-	public ResponseEntity<Loan> getCurrentBorrower(@PathVariable UUID id) {
+	public ResponseEntity<Loan> getCurrentBorrower(@PathVariable String id) {
 		return loanService.getActiveLoanByBookId(id)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
@@ -101,7 +101,7 @@ public class BookController {
 		if (id.matches("\\d+")) {
 			bookService.deleteBookByISBN(Long.parseLong(id));
 		} else {
-			bookService.deleteBookById(UUID.fromString(id));
+			bookService.deleteBookById(id);
 		}
 
 		return ResponseEntity.noContent().build();

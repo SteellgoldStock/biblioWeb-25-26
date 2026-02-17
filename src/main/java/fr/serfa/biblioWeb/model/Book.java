@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
@@ -12,8 +13,8 @@ import java.util.UUID;
 public class Book {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.UUID)
-	private UUID id;
+	@UuidGenerator
+	private String id;
 
 	@Column(nullable = false)
 	@NotBlank
@@ -38,7 +39,7 @@ public class Book {
 		this.author = author;
 	}
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 

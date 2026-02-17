@@ -9,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/authors")
@@ -29,7 +28,7 @@ public class AuthorController {
 	}
 
 	@GetMapping("/{id}")
-	public ResponseEntity<Author> getAuthorById(@PathVariable UUID id) {
+	public ResponseEntity<Author> getAuthorById(@PathVariable String id) {
 		return authorService.getAuthorById(id)
 				.map(ResponseEntity::ok)
 				.orElse(ResponseEntity.notFound().build());
@@ -41,12 +40,12 @@ public class AuthorController {
 	}
 
 	@GetMapping("/{id}/books")
-	public ResponseEntity<List<Book>> getAllBooks(@PathVariable UUID id) {
+	public ResponseEntity<List<Book>> getAllBooks(@PathVariable String id) {
 		return ResponseEntity.ok(authorService.getBooksByAuthor(id));
 	}
 
 	@GetMapping("/{id}/books/count")
-	public ResponseEntity<Integer> getAuthorBookCount(@PathVariable UUID id) {
+	public ResponseEntity<Integer> getAuthorBookCount(@PathVariable String id) {
 		return ResponseEntity.ok(authorService.getAuthorBookCount(id));
 	}
 
@@ -62,7 +61,7 @@ public class AuthorController {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<Void> deleteAuthor(@PathVariable UUID id) {
+	public ResponseEntity<Void> deleteAuthor(@PathVariable String id) {
 		if (authorService.getAuthorById(id).isEmpty()) {
 			return ResponseEntity.notFound().build();
 		}

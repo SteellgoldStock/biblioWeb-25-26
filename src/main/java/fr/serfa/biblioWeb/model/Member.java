@@ -13,7 +13,7 @@ public class Member {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	private UUID id;
+	private String id;
 
 	@Column(name = "first_name", nullable = false)
 	@NotBlank
@@ -41,7 +41,7 @@ public class Member {
 		this.registrationDate = LocalDate.now();
 	}
 
-	public UUID getId() {
+	public String getId() {
 		return id;
 	}
 
