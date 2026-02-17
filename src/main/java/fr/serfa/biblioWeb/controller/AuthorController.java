@@ -71,7 +71,6 @@ public class AuthorController {
 
 	@DeleteMapping("/clean")
 	public ResponseEntity<Void> deleteAll() {
-		// Supprimer tous les livres et auteurs via les repositories
 		bookService.getAllBooks().forEach(book -> bookService.deleteBookById(book.getId()));
 		authorService.getAllAuthors().forEach(author -> authorService.deleteAuthor(author.getId()));
 		return ResponseEntity.noContent().build();
