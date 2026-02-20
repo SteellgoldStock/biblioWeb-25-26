@@ -25,6 +25,7 @@ public class BookController {
 	}
 
 	@GetMapping
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<List<Book>> getAllBooks() {
 		return ResponseEntity.ok(bookService.getAllBooks());
 	}
@@ -42,6 +43,7 @@ public class BookController {
 	}
 
 	@GetMapping("/isbn/{isbn}")
+	@ResponseStatus(HttpStatus.OK)
 	public ResponseEntity<Book> getBookByISBN(@PathVariable Long isbn) {
 		return bookService.getBookByISBN(isbn)
 				.map(ResponseEntity::ok)
